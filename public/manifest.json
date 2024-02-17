@@ -1,0 +1,21 @@
+{
+  "name": "Router Easy",
+  "short_name": "Router_Easy",
+  "description": "Router_Easy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/pwaIcon.png",
+      "type": "image/png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/pwaIcon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}
