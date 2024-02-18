@@ -1,7 +1,15 @@
 <template>
-  <main>
-    <div class="lg:flex lg:flex-row">Call component here</div>
+  <main class="flex flex-col gap-5 mr-10 ml-10">
+    <WifiStatus class="flex-1" />
+
+
+    <div class="lg:flex lg:flex-row ">
+      <WifiAvailable class="flex-1" />
+    </div>
   </main>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import WifiStatus from "@/components/WifiStatus.vue";
+import WifiAvailable from "@/components/WifiAvailable.vue";
+</script>
