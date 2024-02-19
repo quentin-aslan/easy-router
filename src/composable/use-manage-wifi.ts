@@ -1,19 +1,22 @@
 import { ref } from "vue";
 import type { Ref } from "vue";
 
-type CurrentWifi = {
+export type CurrentWifi = {
   ssid?: string;
 };
 
-type AvailableWifi = {
+export type AvailableWifi = {
   ssid: string;
   bars: number;
 };
 
+// Variable accessible from the different instances of the composable
+const currentWifi: Ref<CurrentWifi | undefined> = ref(undefined);
+const availableWifi: Ref<AvailableWifi[]> = ref([]);
+const isConnectWifiLoading = ref(false);
+
 export const useManageWifi = () => {
-  const currentWifi: Ref<CurrentWifi | undefined> = ref(undefined);
-  const availableWifi: Ref<AvailableWifi[]> = ref([]);
-  const isConnectWifiLoading = ref(false);
+  // All variable created here will be private to the instance of the composable
 
   const getCurrentWifi = async () => {
     try {

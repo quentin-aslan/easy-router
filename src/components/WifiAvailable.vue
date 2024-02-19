@@ -13,12 +13,11 @@
             availableWifi.length
           }}</span>
           <select v-model="selectedWifi" class="select select-bordered w-full">
-            <option v-if="selectedWifi.length === 0" value="" disabled selected>No WIFI Available</option>
+            <option v-if="availableWifi.length === 0" value="" disabled selected>No WIFI Available</option>
             <option v-else
                     v-for="wifi in availableWifi"
                     :key="wifi.ssid"
                     :value="wifi.ssid"
-                    :selected="wifi.ssid === currentWifi?.ssid"
             >
               {{ wifi.ssid }} ~ {{ wifi.bars }}
             </option>
