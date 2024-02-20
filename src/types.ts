@@ -29,3 +29,15 @@ export type VpnDisconnect = {
     success: boolean
 }
 
+export type CurrentWifi = {
+    ssid?: string;
+};
+
+export type AvailableWifi = {
+    ssid: string;
+    bars: number;
+};
+
+export type WifiConnect = {
+    success: boolean
+};

@@ -1,5 +1,5 @@
 import {vpnStatusAdapter} from "@/api/adapter";
-import type {VpnConnect, VpnDisconnect} from "@/types";
+import type {AvailableWifi, CurrentWifi, VpnConnect, VpnDisconnect, WifiConnect} from "@/types";
 
 export const fetchVpnStatus = async () => {
     const response = await fetch("/api/nordvpn/status");
@@ -17,5 +17,24 @@ export const fetchVpnConnect = async (city: string): Promise<VpnConnect> => {
 
 export const fetchVpnDisconnect = async (): Promise<VpnDisconnect> => {
     const response = await fetch("/api/nordvpn/disconnect");
+    return await response.json();
+}
+
+export const fetchCurrentWifi = async (): Promise<CurrentWifi> => {
+    const response = await fetch("/api/wifi/current");
+    return await response.json();
+}
+
+export const fetchAvailableWifi = async (): Promise<AvailableWifi[]> => {
+    const response = await fetch("/api/wifi/available");
+    return await response.json();
+}
+
+export const fetchWifiConnect = async (ssid: string, password: string): Promise<WifiConnect> => {
+    const response = await fetch("/api/wifi/connect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ssid, password }),
+    });
     return await response.json();
 }
