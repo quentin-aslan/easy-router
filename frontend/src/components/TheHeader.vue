@@ -8,5 +8,5 @@
 </template>
 
 <script lang="ts" setup>
-import router from "@/router";
+import router from "../router";
 </script>

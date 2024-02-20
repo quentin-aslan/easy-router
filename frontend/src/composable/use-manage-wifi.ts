@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import type { Ref } from "vue";
-import {fetchAvailableWifi, fetchCurrentWifi, fetchWifiConnect} from "@/api";
-import type {AvailableWifi, CurrentWifi} from "@/types";
+import {fetchAvailableWifi, fetchCurrentWifi, fetchWifiConnect} from "../api";
+import type {AvailableWifi, CurrentWifi} from "../types";
 
 // Variable accessible from the different instances of the composable
 const currentWifi: Ref<CurrentWifi | undefined> = ref(undefined);

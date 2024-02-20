@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import WarningIcon from "@/components/icons/WarningIcon.vue";
-import SuccessIcon from "@/components/icons/SuccessIcon.vue";
-import {useManageNordVpn} from "@/composable/use-manage-nord-vpn";
+import WarningIcon from "../components/icons/WarningIcon.vue";
+import SuccessIcon from "../components/icons/SuccessIcon.vue";
+import {useManageNordVpn} from "../composable/use-manage-nord-vpn";
 
 const { vpnStatus, isVpnConnected } = useManageNordVpn();
 </script>

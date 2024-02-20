@@ -1,7 +1,7 @@
 import {computed, type Ref} from "vue";
 import {ref} from "vue";
-import {type VpnStatus, VpnStatusEnum} from "@/types";
-import {fetchVpnConnect, fetchVpnDisconnect, fetchVpnStatus} from "@/api";
+import {type VpnStatus, VpnStatusEnum} from "../types";
+import {fetchVpnConnect, fetchVpnDisconnect, fetchVpnStatus} from "../api";
 
 // Variable accessible from the different instances of the composable
 const vpnStatus: Ref<VpnStatus | undefined> = ref(undefined);
