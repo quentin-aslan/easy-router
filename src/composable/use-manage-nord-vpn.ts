@@ -1,10 +1,11 @@
-import type {Ref} from "vue";
+import {computed, type Ref} from "vue";
 import {ref} from "vue";
-import type {VpnStatus} from "@/types";
+import {type VpnStatus, VpnStatusEnum} from "@/types";
 import {fetchVpnConnect, fetchVpnDisconnect, fetchVpnStatus} from "@/api";
 
 // Variable accessible from the different instances of the composable
 const vpnStatus: Ref<VpnStatus | undefined> = ref(undefined);
+const isVpnConnected = computed(() => vpnStatus.value?.status === VpnStatusEnum.CONNECTED);
 
 export const useManageNordVpn = () => {
   // All variable created here will be private to the instance of the composable
@@ -61,6 +62,7 @@ export const useManageNordVpn = () => {
 
   return {
     vpnStatus,
+    isVpnConnected,
     getVpnStatus,
     connectVpn,
     isConnectVpnError,

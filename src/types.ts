@@ -3,6 +3,11 @@ export enum EnumModalStatus {
     "ERROR" = "error"
 }
 
+export enum VpnStatusEnum {
+    "DISCONNECTED" = "Disconnected",
+    "CONNECTED" = "Connected"
+}
+
 export type VpnStatus = {
     disconnected?: boolean,
     city?: string,
@@ -11,7 +16,7 @@ export type VpnStatus = {
     "current-technology"?: string,
     hostname?: string,
     ip?: string,
-    status?: string,
+    status?: VpnStatusEnum,
     transfer?: string,
     uptime?: string
 };

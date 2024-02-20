@@ -9,17 +9,17 @@
 
       <div v-else class="w-full flex flex-col gap-3">
 
-        <div v-if="vpnStatus" class="flex flex-col gap-3">
+        <div v-if="isVpnConnected && vpnStatus" class="flex flex-col gap-3">
 
-          <div class="mockup-code text-left">
-            <pre data-prefix=">"><code>Status: <span class="underline">{{ vpnStatus.status }}</span></code></pre>
-            <pre data-prefix=">"><code>City: <span class="underline">{{ vpnStatus.city }}</span></code></pre>
-            <pre data-prefix=">"><code>Country: <span class="underline">{{ vpnStatus.country }}</span></code></pre>
-            <pre data-prefix=">"><code>IP: <span class="underline">{{ vpnStatus.ip }}</span></code></pre>
-            <pre data-prefix=">"><code>Hostname: <span class="underline">{{ vpnStatus.hostname }}</span></code></pre>
-            <pre data-prefix=">"><code>UpTime: <span class="underline">{{ vpnStatus.uptime }}</span></code></pre>
-            <pre data-prefix=">"><code>Transfer: <span class="underline">{{ vpnStatus.transfer }}</span></code></pre>
-          </div>
+          <ul class="text-left flex flex-col gap-1 p-1">
+            <li>Status: <span class="underline">{{ vpnStatus.status }}</span></li>
+            <li>City: <span class="underline">{{ vpnStatus.city }}</span></li>
+            <li>Country: <span class="underline">{{ vpnStatus.country }}</span></li>
+            <li>IP: <span class="underline">{{ vpnStatus.ip }}</span></li>
+            <li>Hostname: <span class="underline">{{ vpnStatus.hostname }}</span></li>
+            <li>UpTime: <span class="underline">{{ vpnStatus.uptime }}</span></li>
+            <li>Transfer: <span class="underline">{{ vpnStatus.transfer }}</span></li>
+          </ul>
 
           <form class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitDisconnectForm">
             <button type="submit" class="btn text-error" :disabled="isDisconnectVpnLoading" >
@@ -29,7 +29,7 @@
 
         </div>
 
-        <span class="divider text-neutral-content">⬇️ Connect to a city ⬇️</span>
+        <span v-if="isVpnConnected && vpnStatus" class="divider text-neutral-content">⬇️ Connect to a city ⬇️</span>
 
         <select v-model="selectedCity" class="select select-bordered w-full">
             <option v-for="city in citiesAvailable"
@@ -58,7 +58,7 @@ import ModalStatus from "@/components/ModalStatus.vue";
 import {EnumModalStatus} from "@/types";
 import {useManageNordVpn} from "@/composable/use-manage-nord-vpn";
 
-const { vpnStatus, connectVpn, isConnectVpnLoading, isConnectVpnError, disconnectVpn, isDisconnectVpnLoading, isDisconnectVpnError } = useManageNordVpn()
+const { vpnStatus, isVpnConnected, connectVpn, isConnectVpnLoading, isConnectVpnError, disconnectVpn, isDisconnectVpnLoading, isDisconnectVpnError } = useManageNordVpn()
 const citiesAvailable = [
   {label: 'Montreal 🇨🇦', value: 'Montreal'},
   {label: 'Toronto 🇨🇦', value: 'Toronto'},

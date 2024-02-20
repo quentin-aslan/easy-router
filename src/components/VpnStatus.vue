@@ -1,5 +1,5 @@
 <template>
-  <div v-if="vpnStatus" role="alert" class="alert alert-success">
+  <div v-if="isVpnConnected && vpnStatus" role="alert" class="alert alert-success">
     <SuccessIcon />
     <span
       >🔐 VPN Connected: <b> {{ vpnStatus.city }}, {{ vpnStatus.country }}, {{ vpnStatus.ip }} </b></span
@@ -18,5 +18,5 @@ import WarningIcon from "@/components/icons/WarningIcon.vue";
 import SuccessIcon from "@/components/icons/SuccessIcon.vue";
 import {useManageNordVpn} from "@/composable/use-manage-nord-vpn";
 
-const { vpnStatus } = useManageNordVpn();
+const { vpnStatus, isVpnConnected } = useManageNordVpn();
 </script>
