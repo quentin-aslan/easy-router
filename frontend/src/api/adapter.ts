@@ -1,5 +1,5 @@
-import {type VpnStatus, VpnStatusEnum} from "@/types";
-import type {FetchedVpnStatus} from "@/api/type";
+import {type VpnStatus, VpnStatusEnum} from "../types";
+import type {FetchedVpnStatus} from "./type";
 
 export const vpnStatusAdapter = (fetchedVpnStatus: FetchedVpnStatus): VpnStatus => {
     return {

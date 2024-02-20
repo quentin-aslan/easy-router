@@ -1,0 +1,43 @@
+@host = http://10.42.0.1:21824
+
+# @name wifiList
+GET {{host}}/wifi
+Content-Type: application/json
+
+###
+
+# @name wifiCurrent
+GET {{host}}/wifi/current
+Content-Type: application/json
+
+###
+
+# @name wifiConnect
+POST {{host}}/wifi/connect
+Content-Type: application/json
+
+{
+    "ssid": "ARRIS-8841-5G",
+    "password": "810310352572"
+}
+
+###
+
+# @name vpnStatus
+GET {{host}}/vpn/status
+Content-Type: application/json
+
+###
+
+# @name vpnConnect
+POST {{host}}/vpn/connect
+Content-Type: application/json
+
+{
+    "city": "Montreal"
+}
+
+###
+
+# @name vpnDisconnect
+GET {{host}}/vpn/disconnect

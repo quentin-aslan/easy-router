@@ -54,9 +54,9 @@
 
 <script setup lang="ts">
 import {computed, ref, watch} from "vue";
-import ModalStatus from "@/components/ModalStatus.vue";
-import {EnumModalStatus} from "@/types";
-import {useManageNordVpn} from "@/composable/use-manage-nord-vpn";
+import ModalStatus from "../components/ModalStatus.vue";
+import {EnumModalStatus} from "../types";
+import {useManageNordVpn} from "../composable/use-manage-nord-vpn";
 
 const { vpnStatus, isVpnConnected, connectVpn, isConnectVpnLoading, isConnectVpnError, disconnectVpn, isDisconnectVpnLoading, isDisconnectVpnError } = useManageNordVpn()
 const citiesAvailable = [

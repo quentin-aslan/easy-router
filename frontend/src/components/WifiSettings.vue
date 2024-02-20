@@ -42,11 +42,11 @@
 </template>
 
 <script setup lang="ts">
-import {useManageWifi} from "@/composable/use-manage-wifi";
-import PasswordIcon from "@/components/icons/PasswordIcon.vue";
+import {useManageWifi} from "../composable/use-manage-wifi";
+import PasswordIcon from "../components/icons/PasswordIcon.vue";
 import {computed, ref, watch} from "vue";
-import ModalStatus from "@/components/ModalStatus.vue";
-import {EnumModalStatus} from "@/types";
+import ModalStatus from "../components/ModalStatus.vue";
+import {EnumModalStatus} from "../types";
 
 const { currentWifi, availableWifi, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
 const selectedWifi = ref('')

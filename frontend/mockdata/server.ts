@@ -1,7 +1,7 @@
 import { createServer } from "miragejs"
-import type {FetchedVpnStatus} from "@/api/type";
+import type {FetchedVpnStatus} from "../src/api/type";
 import {type Ref, ref} from "vue";
-import {type AvailableWifi, type CurrentWifi, VpnStatusEnum} from "@/types";
+import {type AvailableWifi, type CurrentWifi, VpnStatusEnum} from "../src/types";
 
 // MirageJS Server, documentation here : https://miragejs.com/docs/getting-started/overview/
 

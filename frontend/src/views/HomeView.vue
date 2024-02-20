@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import WifiStatus from "@/components/WifiStatus.vue";
-import WifiSettings from "@/components/WifiSettings.vue";
-import VpnStatus from "@/components/VpnStatus.vue";
-import NordVpnSettings from "@/components/NordVpnSettings.vue";
+import WifiStatus from "../components/WifiStatus.vue";
+import WifiSettings from "../components/WifiSettings.vue";
+import VpnStatus from "../components/VpnStatus.vue";
+import NordVpnSettings from "../components/NordVpnSettings.vue";
 </script>

@@ -1,5 +1,5 @@
-import {vpnStatusAdapter} from "@/api/adapter";
-import type {AvailableWifi, CurrentWifi, VpnConnect, VpnDisconnect, WifiConnect} from "@/types";
+import {vpnStatusAdapter} from "./adapter";
+import type {AvailableWifi, CurrentWifi, VpnConnect, VpnDisconnect, WifiConnect} from "../types";
 
 export const fetchVpnStatus = async () => {
     const response = await fetch("/api/nordvpn/status");

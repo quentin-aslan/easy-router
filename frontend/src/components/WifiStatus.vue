@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { useManageWifi } from "@/composable/use-manage-wifi";
-import WarningIcon from "@/components/icons/WarningIcon.vue";
-import SuccessIcon from "@/components/icons/SuccessIcon.vue";
+import { useManageWifi } from "../composable/use-manage-wifi";
+import WarningIcon from "../components/icons/WarningIcon.vue";
+import SuccessIcon from "../components/icons/SuccessIcon.vue";
 
 const { currentWifi } = useManageWifi();
 </script>

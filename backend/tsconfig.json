@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "../dist/backend",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "typeRoots": ["./node_modules/@types", "./types"]
+  },
+  "types": ["node"]
+}
