@@ -22,11 +22,11 @@
           </select>
         </div>
 
-        <form :disabled="selectedWifi !== ''" class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitForm">
+        <form class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitForm">
           <div class="w-full">
             <label class="input input-bordered flex items-center gap-2">
               <PasswordIcon />
-              <input v-model="password" type="text" class="grow" placeholder="Wifi Password" />
+              <input :disabled="selectedWifi !== ''" v-model="password" type="text" class="grow" placeholder="Wifi Password" />
             </label>
           </div>
 
@@ -46,7 +46,7 @@ import {useManageWifi} from "@/composable/use-manage-wifi";
 import PasswordIcon from "@/components/icons/PasswordIcon.vue";
 import {computed, ref} from "vue";
 import ModalStatus from "@/components/ModalStatus.vue";
-import {EnumModalStatus} from "@/types/types";
+import {EnumModalStatus} from "@/types";
 
 const { availableWifi, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
 const selectedWifi = ref('');

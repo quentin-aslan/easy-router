@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import ErrorIcon from "@/components/icons/ErrorIcon.vue";
 import SuccessIcon from "@/components/icons/SuccessIcon.vue";
-import {EnumModalStatus} from "@/types/types";
+import {EnumModalStatus} from "@/types";
 
 type Props = {
   id: string;
