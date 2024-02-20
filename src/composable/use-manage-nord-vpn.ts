@@ -63,6 +63,10 @@ export const useManageNordVpn = () => {
     vpnStatus,
     getVpnStatus,
     connectVpn,
-    disconnectVpn
+    isConnectVpnError,
+    isConnectVpnLoading,
+    disconnectVpn,
+    isDisconnectVpnError,
+    isDisconnectVpnLoading,
   };
 };
