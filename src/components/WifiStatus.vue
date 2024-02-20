@@ -2,7 +2,7 @@
   <div v-if="currentWifi" role="alert" class="alert alert-success">
     <SuccessIcon />
     <span
-      >Wifi Connected ! ~ <b>{{ currentWifi.ssid }}</b></span
+      >🛜 Wifi Connected: <b>{{ currentWifi.ssid }}</b></span
     >
   </div>
 

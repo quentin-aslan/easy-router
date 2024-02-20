@@ -1,14 +1,7 @@
 import { ref } from "vue";
 import type { Ref } from "vue";
-
-export type CurrentWifi = {
-  ssid?: string;
-};
-
-export type AvailableWifi = {
-  ssid: string;
-  bars: number;
-};
+import {fetchAvailableWifi, fetchCurrentWifi, fetchWifiConnect} from "@/api";
+import type {AvailableWifi, CurrentWifi} from "@/types";
 
 // Variable accessible from the different instances of the composable
 const currentWifi: Ref<CurrentWifi | undefined> = ref(undefined);
@@ -21,19 +14,19 @@ export const useManageWifi = () => {
 
   const getCurrentWifi = async () => {
     try {
-      const response = await fetch("/api/wifi/current");
-      currentWifi.value = await response.json();
+      currentWifi.value = await fetchCurrentWifi()
     } catch (e) {
       console.error(e);
+      currentWifi.value = undefined;
     }
   };
 
   const getAvailableWifi = async () => {
     try {
-      const response = await fetch("/api/wifi/available");
-      availableWifi.value = await response.json();
+      availableWifi.value = await fetchAvailableWifi()
     } catch (e) {
       console.error(e);
+      availableWifi.value = []
     }
   };
 
@@ -42,13 +35,8 @@ export const useManageWifi = () => {
       isConnectWifiError.value = false;
       isConnectWifiLoading.value = true;
 
-      const response = await fetch("/api/wifi/connect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ssid, password }),
-      });
-      const data = await response.json();
-      if (data.success) await getCurrentWifi();
+      const response = await fetchWifiConnect(ssid, password);
+      if (response.success) await getCurrentWifi();
       else isConnectWifiError.value = true;
 
     } catch (e) {

@@ -4,7 +4,7 @@ import { createApp } from "vue";
 
 import App from "./App.vue";
 import router from "./router";
-import '@/mockdata/server'  // Import and run the MirageJS server
+import '../mockdata/server'  // Import and run the MirageJS server
 
 const app = createApp(App);
 

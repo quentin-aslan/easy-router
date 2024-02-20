@@ -16,8 +16,8 @@ https://github.com/quentin-aslan/easy-router-backend
 
 
 ### Features
-- [ ] Display available WIFI networks with signal strength
-- [ ] Connect to a WIFI network
-- [ ] Display NordVPN connection status
+- [x] Display available WIFI networks with signal strength
+- [x] Connect to a WIFI network
+- [x] Display NordVPN connection status
 - [ ] Connect to NordVPN server (with a list of available hardcoded servers)
 - [ ] Disconnect from NordVPN server
