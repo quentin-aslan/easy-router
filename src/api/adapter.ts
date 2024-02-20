@@ -1,4 +1,4 @@
-import type {VpnStatus} from "@/types";
+import {type VpnStatus, VpnStatusEnum} from "@/types";
 import type {FetchedVpnStatus} from "@/api/type";
 
 export const vpnStatusAdapter = (fetchedVpnStatus: FetchedVpnStatus): VpnStatus => {
@@ -9,7 +9,7 @@ export const vpnStatusAdapter = (fetchedVpnStatus: FetchedVpnStatus): VpnStatus 
         "current-technology": fetchedVpnStatus["Current technology"],
         hostname: fetchedVpnStatus.Hostname,
         ip: fetchedVpnStatus.IP,
-        status: fetchedVpnStatus.Status,
+        status: (fetchedVpnStatus.Status === VpnStatusEnum.CONNECTED ? VpnStatusEnum.CONNECTED : VpnStatusEnum.DISCONNECTED),
         transfer: fetchedVpnStatus.Transfer,
         uptime: fetchedVpnStatus.Uptime,
     };
