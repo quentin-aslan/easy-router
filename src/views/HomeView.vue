@@ -4,7 +4,7 @@
     <VpnStatus class="flex-1" />
 
     <div class="flex flex-col lg:flex-row  gap-5">
-      <WifiAvailable class="flex-1" />
+      <WifiSettings class="flex-1" />
       <NordVpnSettings class="flex-1" />
     </div>
   </main>
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import WifiStatus from "@/components/WifiStatus.vue";
-import WifiAvailable from "@/components/WifiAvailable.vue";
+import WifiSettings from "@/components/WifiSettings.vue";
 import VpnStatus from "@/components/VpnStatus.vue";
 import NordVpnSettings from "@/components/NordVpnSettings.vue";
 </script>

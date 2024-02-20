@@ -32,8 +32,8 @@ export const useManageNordVpn = () => {
       isConnectVpnLoading.value = true;
 
       const response = await fetchVpnConnect(city)
-      if (response.success) await getVpnStatus();
-      else isConnectVpnError.value = true;
+      if (!response.success) isConnectVpnError.value = true;
+      await getVpnStatus();
 
     } catch (e) {
       console.error(e);
@@ -49,8 +49,8 @@ export const useManageNordVpn = () => {
       isDisconnectVpnLoading.value = true;
 
       const response = await fetchVpnDisconnect();
-      if (response.success) await getVpnStatus();
-      else isDisconnectVpnError.value = true;
+      if (!response.success) isDisconnectVpnError.value = true;
+      await getVpnStatus();
 
     } catch (e) {
       console.error(e);

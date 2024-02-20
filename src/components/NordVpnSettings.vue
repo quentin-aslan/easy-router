@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import ModalStatus from "@/components/ModalStatus.vue";
 import {EnumModalStatus} from "@/types";
 import {useManageNordVpn} from "@/composable/use-manage-nord-vpn";
@@ -70,15 +70,17 @@ const citiesAvailable = [
 ]
 
 const selectedCity = ref('');
+watch(() => vpnStatus.value, (newValue) => selectedCity.value = newValue?.city || '')
+
 
 const isConnectButtonDisabled = computed(() => (selectedCity.value === '' || isConnectVpnLoading.value))
 
 const modalIdConnect = 'nord-vpn-connect-modal';
-const modalStatusConnect = computed(() => (isConnectVpnLoading.value) ? EnumModalStatus.ERROR : EnumModalStatus.SUCCESS);
+const modalStatusConnect = computed(() => (isConnectVpnError.value) ? EnumModalStatus.ERROR : EnumModalStatus.SUCCESS);
 const modalContentConnect = computed(() => (modalStatusConnect.value === EnumModalStatus.ERROR) ? 'Error while connecting to the VPN' : 'VPN connected successfully');
 
 const modalIdDisconnect = 'nord-vpn-disconnect-modal';
-const modalStatusDisconnect = computed(() => (isConnectVpnLoading.value) ? EnumModalStatus.ERROR : EnumModalStatus.SUCCESS);
+const modalStatusDisconnect = computed(() => (isDisconnectVpnError.value) ? EnumModalStatus.ERROR : EnumModalStatus.SUCCESS);
 const modalContentDisconnect = computed(() => (modalStatusDisconnect.value === EnumModalStatus.ERROR) ? 'Error while disconnecting of the VPN' : 'VPN disconnected successfully');
 
 const submitForm = async () => {

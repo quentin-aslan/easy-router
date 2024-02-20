@@ -44,12 +44,14 @@
 <script setup lang="ts">
 import {useManageWifi} from "@/composable/use-manage-wifi";
 import PasswordIcon from "@/components/icons/PasswordIcon.vue";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import ModalStatus from "@/components/ModalStatus.vue";
 import {EnumModalStatus} from "@/types";
 
-const { availableWifi, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
-const selectedWifi = ref('');
+const { currentWifi, availableWifi, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
+const selectedWifi = ref('')
+watch(() => currentWifi.value, (newValue) => selectedWifi.value = newValue?.ssid || '')
+
 const password = ref('');
 
 const isPasswordDisabled = computed(() => (selectedWifi.value === '' || password.value.length === 0 || isConnectWifiLoading.value))

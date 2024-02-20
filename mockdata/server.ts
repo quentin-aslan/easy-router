@@ -2,6 +2,7 @@ import { createServer } from "miragejs"
 import type {AvailableWifi, CurrentWifi} from "@/composable/use-manage-wifi";
 import type {FetchedVpnStatus} from "@/api/type";
 import {type Ref, ref} from "vue";
+import {VpnStatusEnum} from "@/types";
 
 // MirageJS Server, documentation here : https://miragejs.com/docs/getting-started/overview/
 
@@ -24,6 +25,9 @@ createServer({
             }, {
                 ssid: "My second wifi",
                 bars: 2
+            },{
+                ssid: "My current wifi",
+                bars: 5
             }]
 
             return availableWifi
@@ -61,18 +65,20 @@ createServer({
 
         this.post("/nordvpn/connect", (schema, request) => {
             let attrs = JSON.parse(request.requestBody)
-            if(attrs.city) {
-                vpnStatus.value = vpnStatusMock
+            vpnStatus.value = vpnStatusMock
+            if(!attrs.city) {
+
                 vpnStatus.value.City = attrs.city
                 return { success: true }
             } else {
+                vpnStatus.value.Status = VpnStatusEnum.DISCONNECTED
                 return { success: false }
             }
         })
 
         this.get("/nordvpn/disconnect", () => {
             vpnStatus.value = { Status: "Disconnected"}
-            return { success: true }
+            return { success: false }
         })
     },
 })
