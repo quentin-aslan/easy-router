@@ -4,7 +4,7 @@ import express, { Request, Response } from "express";
 import {fileURLToPath} from "url";
 const app = express();
 import { exec } from 'child_process';
-const SERVER_PORT = process.env.PORT || 21824;
+const SERVER_PORT = process.env.PORT || 80;
 
 // Body parser
 app.use(express.urlencoded({ extended: false }));
@@ -75,7 +75,11 @@ app.get('/api/nordvpn/status', (req: Request, res: Response) => {
             }
             const status = stdout.split('\n').reduce((acc: any, line: string) => {
                 const [key, value] = line.split(':');
-                acc[key] = value.trim();
+                if(key && value) {
+                    // Remove useless characters
+                    const cleanKey = key.replace('\r-\r  \r\r-\r  \r', '').trim();
+                    acc[cleanKey] = value.trim();
+                }
                 return acc;
             }, {});
             res.json(status);
