@@ -1,0 +1,50 @@
+@host = http://10.42.0.1
+
+# @name wifiList
+GET {{host}}/api/wifi/available
+Content-Type: application/json
+
+###
+
+# @name wifiCurrent
+GET {{host}}/api/wifi/current
+Content-Type: application/json
+
+###
+
+# @name wifiConnect
+POST {{host}}/api/wifi/connect
+Content-Type: application/json
+
+{
+    "ssid": "xxxx",
+    "password": "xxxxx"
+}
+
+###
+
+# @name wifiDisconnect
+GET {{host}}/api/wifi/disconnect
+Content-Type: application/json
+
+
+###
+
+# @name vpnStatus
+GET {{host}}/api/nordvpn/status
+Content-Type: application/json
+
+###
+
+# @name vpnConnect
+POST {{host}}/api/nordvpn/connect
+Content-Type: application/json
+
+{
+    "city": "Montreal"
+}
+
+###
+
+# @name vpnDisconnect
+GET {{host}}/api/nordvpn/disconnect
