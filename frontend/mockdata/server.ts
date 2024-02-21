@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 
             this.get("/wifi/current", () => {
                 return currentWifi.value
-            })
+            }, {timing: 2000})
 
             this.get("/wifi/available", () => {
                 const availableWifi: AvailableWifi[] = [{
@@ -61,7 +61,7 @@ if (process.env.NODE_ENV === 'development') {
 
             this.get("/nordvpn/status", () => {
                 return vpnStatus.value
-            })
+            }, {timing: 1000})
 
             this.post("/nordvpn/connect", (schema, request) => {
                 let attrs = JSON.parse(request.requestBody)

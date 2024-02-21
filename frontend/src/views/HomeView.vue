@@ -1,7 +1,7 @@
 <template>
   <main class="flex flex-col gap-5 mr-10 ml-10">
     <WifiStatus class="flex-1" />
-    <VpnStatus class="flex-1" />
+    <VpnStatus  class="flex-1" />
 
     <div class="flex flex-col lg:flex-row  gap-5">
       <WifiSettings class="flex-1" />

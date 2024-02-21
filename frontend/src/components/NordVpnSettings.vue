@@ -3,7 +3,7 @@
     <div class="card-body items-center text-center gap-5 p-5">
       <h1 class="text-xl">NordVPN Settings</h1>
 
-      <span v-if="isConnectVpnLoading || isDisconnectVpnLoading">
+      <span v-if="isConnectVpnLoading || isDisconnectVpnLoading || isGetVpnStatusLoading">
         <span class="loading loading-bars loading-lg"></span>
       </span>
 
@@ -58,7 +58,7 @@ import ModalStatus from "../components/ModalStatus.vue";
 import {EnumModalStatus} from "../types";
 import {useManageNordVpn} from "../composable/use-manage-nord-vpn";
 
-const { vpnStatus, isVpnConnected, connectVpn, isConnectVpnLoading, isConnectVpnError, disconnectVpn, isDisconnectVpnLoading, isDisconnectVpnError } = useManageNordVpn()
+const { vpnStatus, isGetVpnStatusLoading, isVpnConnected, connectVpn, isConnectVpnLoading, isConnectVpnError, disconnectVpn, isDisconnectVpnLoading, isDisconnectVpnError } = useManageNordVpn()
 const citiesAvailable = [
   {label: 'Montreal 🇨🇦', value: 'Montreal'},
   {label: 'Toronto 🇨🇦', value: 'Toronto'},
@@ -69,8 +69,8 @@ const citiesAvailable = [
   {label: 'Vancouver 🇨🇦', value: 'Vancouver'}
 ]
 
-const selectedCity = ref('');
-watch(() => vpnStatus.value, (newValue) => selectedCity.value = newValue?.city || '')
+const selectedCity = ref(citiesAvailable[0].value);
+watch(() => vpnStatus.value, (newValue) => selectedCity.value = newValue?.city || citiesAvailable[0].value)
 
 
 const isConnectButtonDisabled = computed(() => (selectedCity.value === '' || isConnectVpnLoading.value))

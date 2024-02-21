@@ -3,7 +3,7 @@
     <div class="card-body items-center text-center gap-5 p-5">
       <h1 class="text-xl">WIFI Available</h1>
 
-      <span v-if="isConnectWifiLoading">
+      <span v-if="isConnectWifiLoading || isGetCurrentWifiLoading || isGetAvailableWifiLoading">
         <span class="loading loading-bars loading-lg"></span>
       </span>
 
@@ -26,7 +26,7 @@
           <div class="w-full">
             <label class="input input-bordered flex items-center gap-2">
               <PasswordIcon />
-              <input :disabled="selectedWifi !== ''" v-model="password" type="text" class="grow" placeholder="Wifi Password" />
+              <input :disabled="selectedWifi === ''" v-model="password" type="text" class="grow" placeholder="Wifi Password" />
             </label>
           </div>
 
@@ -48,7 +48,7 @@ import {computed, ref, watch} from "vue";
 import ModalStatus from "../components/ModalStatus.vue";
 import {EnumModalStatus} from "../types";
 
-const { currentWifi, availableWifi, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
+const { currentWifi, isGetCurrentWifiLoading, availableWifi, isGetAvailableWifiLoading, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
 const selectedWifi = ref('')
 watch(() => currentWifi.value, (newValue) => selectedWifi.value = newValue?.ssid || '')
 

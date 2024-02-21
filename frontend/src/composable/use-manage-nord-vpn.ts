@@ -6,6 +6,7 @@ import {fetchVpnConnect, fetchVpnDisconnect, fetchVpnStatus} from "../api";
 // Variable accessible from the different instances of the composable
 const vpnStatus: Ref<VpnStatus | undefined> = ref(undefined);
 const isVpnConnected = computed(() => vpnStatus.value?.status === VpnStatusEnum.CONNECTED);
+const isGetVpnStatusLoading = ref(false);
 
 export const useManageNordVpn = () => {
   // All variable created here will be private to the instance of the composable
@@ -18,11 +19,14 @@ export const useManageNordVpn = () => {
 
   const getVpnStatus = async () => {
     try {
+      isGetVpnStatusLoading.value = true;
       vpnStatus.value = undefined
 
       vpnStatus.value = await fetchVpnStatus();
     } catch (e) {
       console.error(e);
+    } finally {
+        isGetVpnStatusLoading.value = false;
     }
   };
 
@@ -62,6 +66,7 @@ export const useManageNordVpn = () => {
 
   return {
     vpnStatus,
+    isGetVpnStatusLoading,
     isVpnConnected,
     getVpnStatus,
     connectVpn,

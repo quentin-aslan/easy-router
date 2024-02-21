@@ -6,6 +6,8 @@ import type {AvailableWifi, CurrentWifi} from "../types";
 // Variable accessible from the different instances of the composable
 const currentWifi: Ref<CurrentWifi | undefined> = ref(undefined);
 const availableWifi: Ref<AvailableWifi[]> = ref([]);
+const isGetCurrentWifiLoading = ref(false);
+const isGetAvailableWifiLoading = ref(false);
 
 export const useManageWifi = () => {
   // All variable created here will be private to the instance of the composable
@@ -14,19 +16,25 @@ export const useManageWifi = () => {
 
   const getCurrentWifi = async () => {
     try {
+      isGetCurrentWifiLoading.value = true
       currentWifi.value = await fetchCurrentWifi()
     } catch (e) {
-      console.error(e);
-      currentWifi.value = undefined;
+      console.error(e)
+      currentWifi.value = undefined
+    } finally {
+        isGetCurrentWifiLoading.value = false
     }
   };
 
   const getAvailableWifi = async () => {
     try {
+      isGetAvailableWifiLoading.value = true
       availableWifi.value = await fetchAvailableWifi()
     } catch (e) {
       console.error(e);
       availableWifi.value = []
+    } finally {
+      isGetAvailableWifiLoading.value = false
     }
   };
 
@@ -49,7 +57,9 @@ export const useManageWifi = () => {
 
   return {
     currentWifi,
+    isGetCurrentWifiLoading,
     availableWifi,
+    isGetAvailableWifiLoading,
     isConnectWifiLoading,
     isConnectWifiError,
     getCurrentWifi,
