@@ -5,6 +5,8 @@
       <span
         >🛜 Wifi Connected: <b>{{ currentWifi.ssid }}</b></span
       >
+
+      <a class="link" target="_blank" href="http://neverssl.com">If you are on a PUBLIC WIFI, click here to redirect to the login portail</a>
     </div>
 
     <div v-else role="alert" class="alert alert-warning">

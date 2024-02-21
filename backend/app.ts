@@ -53,7 +53,9 @@ app.get('/api/wifi/current', (req: Request, res: Response) => {
 app.post('/api/wifi/connect', (req: Request, res: Response) => {
     try {
         const { ssid, password } = req.body;
-        exec(`nmcli dev wifi connect ${ssid} password ${password} ifname wlan0`, (error: any, stdout: any, stderr: any) => {
+        let cmd = `nmcli dev wifi connect ${ssid} password ${password} ifname wlan0`;
+        if (!password || password == '') cmd = `nmcli dev wifi connect ${ssid} ifname wlan0`;
+        exec(cmd, (error: any, stdout: any, stderr: any) => {
             if (error) {
                 console.error(`exec error: ${error}`);
                 return res.status(500).json({'success': false, 'error': 'Failed to connect to wifi'});
