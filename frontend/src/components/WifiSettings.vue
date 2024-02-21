@@ -1,39 +1,41 @@
 <template>
-  <CardTemplate title="WIFI Available">
+  <div>
+    <CardTemplate title="WIFI Available">
     <span v-if="isConnectWifiLoading || isGetCurrentWifiLoading || isGetAvailableWifiLoading">
         <span class="loading loading-bars loading-lg"></span>
       </span>
-    <div v-else class="w-full flex flex-col gap-3">
-      <div class="indicator w-full">
-        <span class="indicator-item badge badge-secondary badge-lg">{{ availableWifi.length }}</span>
-        <select v-model="selectedWifi" class="select select-bordered w-full">
-          <option v-if="availableWifi.length === 0 " value="" disabled selected>No WIFI Available</option>
-          <option v-else-if="selectedWifi === ''" value="" disabled selected>Select a WIFI network</option>
-          <option
-                  v-for="wifi in availableWifi"
-                  :key="wifi.ssid"
-                  :value="wifi.ssid"
-          >
-            {{ wifi.ssid }} ~ {{ wifi.bars }}
-          </option>
-        </select>
-      </div>
-
-      <form class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitForm">
-        <div class="w-full">
-          <label class="input input-bordered flex items-center gap-2">
-            <PasswordIcon />
-            <input :disabled="selectedWifi === ''" v-model="password" type="text" class="grow" placeholder="Wifi Password" />
-          </label>
+      <div v-else class="w-full flex flex-col gap-3">
+        <div class="indicator w-full">
+          <span class="indicator-item badge badge-secondary badge-lg">{{ availableWifi.length }}</span>
+          <select v-model="selectedWifi" class="select select-bordered w-full">
+            <option v-if="availableWifi.length === 0 " value="" disabled selected>No WIFI Available</option>
+            <option v-else-if="selectedWifi === ''" value="" disabled selected>Select a WIFI network</option>
+            <option
+                v-for="wifi in availableWifi"
+                :key="wifi.ssid"
+                :value="wifi.ssid"
+            >
+              {{ wifi.ssid }} ~ {{ wifi.bars }}
+            </option>
+          </select>
         </div>
 
-        <button type="submit" class="btn btn-neutral" :disabled="isPasswordDisabled" >
-          Connect
-        </button>
-      </form>
-    </div>
-  </CardTemplate>
-  <ModalStatus :id="modalId" :status="modalStatus" :content="modalContent" />
+        <form class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitForm">
+          <div class="w-full">
+            <label class="input input-bordered flex items-center gap-2">
+              <PasswordIcon />
+              <input :disabled="selectedWifi === ''" v-model="password" type="text" class="grow" placeholder="Wifi Password" />
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-neutral" :disabled="isSubmitDisabled" >
+            Connect
+          </button>
+        </form>
+      </div>
+    </CardTemplate>
+    <ModalStatus :id="modalId" :status="modalStatus" :content="modalContent" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -50,13 +52,18 @@ watch(() => currentWifi.value, (newValue) => selectedWifi.value = newValue?.ssid
 
 const password = ref('');
 
-const isPasswordDisabled = computed(() => (selectedWifi.value === '' || password.value.length === 0 || isConnectWifiLoading.value))
+const isSubmitDisabled = computed(() => (selectedWifi.value === '' ||  isConnectWifiLoading.value))
 
 const modalId = 'wifi-available-modal';
 const modalStatus = computed(() => (isConnectWifiError.value) ? EnumModalStatus.ERROR : EnumModalStatus.SUCCESS);
 const modalContent = computed(() => (modalStatus.value === EnumModalStatus.ERROR) ? 'Error while connecting to the wifi' : 'Wifi connected successfully');
 
 const submitForm = async () => {
+  if (password.value === '') {
+    if (!confirm('Are you sure you want to connect to the wifi without a password?')) {
+      return;
+    }
+  }
   await connectWifi(selectedWifi.value, password.value);
   (document.getElementById(modalId) as HTMLDialogElement).showModal()
 };

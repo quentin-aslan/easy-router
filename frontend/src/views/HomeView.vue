@@ -3,7 +3,7 @@
     <WifiStatus class="flex-1" />
     <VpnStatus  class="flex-1" />
 
-    <div class="flex flex-col lg:flex-row  gap-5">
+    <div class="flex flex-col lg:flex-row gap-5">
       <WifiSettings class="flex-1" />
       <NordVpnSettings class="flex-1" />
     </div>
