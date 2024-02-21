@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isGetCurrentWifiLoading && !isGetAvailableWifiLoading">
-    <div v-if="isWifiConnected" role="alert" class="alert alert-success">
-      <SuccessIcon />
+    <div v-if="isWifiConnected" role="alert" class="alert">
+      <SuccessIcon class="text-success" />
       <span
         >🛜 Wifi Connected: <b>{{ currentWifi.ssid }}</b></span
       >

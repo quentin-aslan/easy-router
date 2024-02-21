@@ -1,5 +1,5 @@
 <template>
-  <button @click="refresh" class="btn btn-outline btn-primary">Refresh WIFI & VPN Datas</button>
+  <button @click="refresh" class="btn btn-outline btn-accent">Refresh WIFI & VPN Datas</button>
 </template>
 
 <script setup lang="ts">

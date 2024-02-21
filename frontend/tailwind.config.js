@@ -5,9 +5,8 @@ export default {
     extend: {},
   },
   plugins: [require("daisyui")],
-  // daisyUI config (optional - here are the default values)
   daisyui: {
-    themes: ["light", "dark", "cupcake", "forest", "nord", "retro"],
-    darkTheme: "dark", // name of one of the included themes for dark mode
+    themes: ["corporate", "dark"],
+    darkTheme: "dark"
   },
 };

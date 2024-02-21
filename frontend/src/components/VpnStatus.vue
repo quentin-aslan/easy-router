@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isGetVpnStatusLoading">
-    <div v-if="isVpnConnected && vpnStatus" role="alert" class="alert alert-success">
-      <SuccessIcon />
+    <div v-if="isVpnConnected && vpnStatus" role="alert" class="alert">
+      <SuccessIcon class="text-success" />
       <span
       >🔐 VPN Connected: <b> {{ vpnStatus.city }}, {{ vpnStatus.country }}, {{ vpnStatus.ip }} </b></span
       >

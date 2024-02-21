@@ -1,4 +1,4 @@
-@host = http://10.42.0.1:21824
+@host = http://10.42.0.1
 
 # @name wifiList
 GET {{host}}/api/wifi/available
@@ -20,6 +20,13 @@ Content-Type: application/json
     "ssid": "xxxx",
     "password": "xxxxx"
 }
+
+###
+
+# @name wifiDisconnect
+GET {{host}}/api/wifi/disconnect
+Content-Type: application/json
+
 
 ###
 
