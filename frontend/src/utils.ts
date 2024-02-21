@@ -4,3 +4,7 @@ export const getFormattedDate = (date: Date) => {
   const day = date.getDate();
   return `${year}-${month}-${day}`;
 };
+
+export const isPWA = () => {
+  return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone === true);
+}

@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import {computed, ref} from "vue";
 import type { Ref } from "vue";
 import {fetchAvailableWifi, fetchCurrentWifi, fetchWifiConnect} from "../api";
 import type {AvailableWifi, CurrentWifi} from "../types";
@@ -8,6 +8,7 @@ const currentWifi: Ref<CurrentWifi | undefined> = ref(undefined);
 const availableWifi: Ref<AvailableWifi[]> = ref([]);
 const isGetCurrentWifiLoading = ref(false);
 const isGetAvailableWifiLoading = ref(false);
+const isWifiConnected = computed(() => currentWifi.value?.ssid);
 
 export const useManageWifi = () => {
   // All variable created here will be private to the instance of the composable
@@ -57,6 +58,7 @@ export const useManageWifi = () => {
 
   return {
     currentWifi,
+    isWifiConnected,
     isGetCurrentWifiLoading,
     availableWifi,
     isGetAvailableWifiLoading,

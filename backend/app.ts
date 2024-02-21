@@ -41,7 +41,7 @@ app.get('/api/wifi/current', (req: Request, res: Response) => {
                 console.error(`exec error: ${error}`);
                 return res.status(500).json({'success': false, 'error': 'Failed to get current wifi'});
             }
-            const ssid = stdout.split('\n').find((line: string) => line.startsWith('yes:')).split(':')[1].trim();
+            const ssid = stdout.split('\n').find((line: string) => line.startsWith('yes:'))?.split(':')[1]?.trim();
             res.json({'ssid': ssid});
         });
     } catch (e) {
@@ -63,6 +63,21 @@ app.post('/api/wifi/connect', (req: Request, res: Response) => {
     } catch (e) {
         console.error(`exec error: ${e}`);
         return res.status(500).json({'success': false, 'error': 'Failed to connect to wifi'});
+    }
+});
+
+app.get('/api/wifi/disconnect', (req: Request, res: Response) => {
+    try {
+        exec('nmcli dev disconnect wlan0', (error: any, stdout: any, stderr: any) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return res.status(500).json({'success': false, 'error': 'Failed to disconnect from wifi'});
+            }
+            res.json({'success': true});
+        });
+    } catch (e) {
+        console.error(`exec error: ${e}`);
+        return res.status(500).json({'success': false, 'error': 'Failed to disconnect from wifi'});
     }
 });
 

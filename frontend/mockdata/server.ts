@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
 
             // WIFI API
 
-            const currentWifi: Ref<CurrentWifi> = ref({ ssid: "My current wifi" })
+            const currentWifi: Ref<CurrentWifi> = ref({ })
 
             this.get("/wifi/current", () => {
                 return currentWifi.value

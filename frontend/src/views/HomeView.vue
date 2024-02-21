@@ -7,6 +7,8 @@
       <WifiSettings class="flex-1" />
       <NordVpnSettings class="flex-1" />
     </div>
+
+    <RefreshButton v-if="isPWA()" />
   </main>
 </template>
 
@@ -15,4 +17,6 @@ import WifiStatus from "../components/WifiStatus.vue";
 import WifiSettings from "../components/WifiSettings.vue";
 import VpnStatus from "../components/VpnStatus.vue";
 import NordVpnSettings from "../components/NordVpnSettings.vue";
+import RefreshButton from "../components/RefreshButton.vue";
+import {isPWA} from "../utils";
 </script>

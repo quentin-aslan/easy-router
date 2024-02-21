@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isGetCurrentWifiLoading && !isGetAvailableWifiLoading">
-    <div v-if="currentWifi" role="alert" class="alert alert-success">
+    <div v-if="isWifiConnected" role="alert" class="alert alert-success">
       <SuccessIcon />
       <span
         >🛜 Wifi Connected: <b>{{ currentWifi.ssid }}</b></span
@@ -19,5 +19,5 @@ import { useManageWifi } from "../composable/use-manage-wifi";
 import WarningIcon from "../components/icons/WarningIcon.vue";
 import SuccessIcon from "../components/icons/SuccessIcon.vue";
 
-const { currentWifi, isGetCurrentWifiLoading, isGetAvailableWifiLoading  } = useManageWifi();
+const { currentWifi, isWifiConnected, isGetCurrentWifiLoading, isGetAvailableWifiLoading  } = useManageWifi();
 </script>
