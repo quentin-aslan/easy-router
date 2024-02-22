@@ -6,10 +6,11 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 type Props = {
   title: string;
-}
+};
 
 const props = defineProps<Props>();
 </script>

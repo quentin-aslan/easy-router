@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === 'development') {
             const vpnStatusMock = {
                 "Status": "Connected",
                 "Hostname": "xxxx.nordvpn.com",
-                "IP": "x.x.x.x",
+                "IP": "192.x.x.x",
                 "Country": "Canada",
                 "City": "Montreal",
                 "Current technology": "NORDLYNX",

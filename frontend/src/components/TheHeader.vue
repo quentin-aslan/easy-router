@@ -1,12 +1,11 @@
 <template>
-  <div class="navbar bg-base-100">
-    <div class="flex-1">
-      <a @click="router.push('/')" class="btn btn-ghost text-xl">🛜 Router Easy 🛜</a
-      >
-    </div>
+  <div class="navbar bg-base-100 flex items-center justify-center">
+    <span class="text-xl" id="logo">🛜 Router Easy</span>
   </div>
 </template>
 
-<script lang="ts" setup>
-import router from "../router";
-</script>
+<style>
+#logo {
+  user-select: none; /* Prevent text selection */
+}
+</style>

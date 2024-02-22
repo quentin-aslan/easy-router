@@ -1,10 +1,10 @@
 <template>
   <div>
-    <CardTemplate title="WIFI Available">
+    <CardTemplate title="WIFI" id="wifi-card">
     <span v-if="isConnectWifiLoading || isGetCurrentWifiLoading || isGetAvailableWifiLoading">
-        <span class="loading loading-bars loading-lg"></span>
+        <span class="loading loading-spinner loading-md"></span>
       </span>
-      <div v-else class="w-full flex flex-col gap-3">
+      <div v-else class="w-full sm:px-24 flex flex-col gap-3">
         <div class="indicator w-full">
           <span class="indicator-item badge badge-secondary badge-lg">{{ availableWifi.length }}</span>
           <select v-model="selectedWifi" class="select select-bordered w-full">
@@ -68,3 +68,10 @@ const submitForm = async () => {
   (document.getElementById(modalId) as HTMLDialogElement).showModal()
 };
 </script>
+
+<style>
+#wifi-card {
+  min-height: 264px;
+  align-items: baseline;
+}
+</style>
