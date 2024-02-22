@@ -13,8 +13,6 @@ This setup ensures a secure and private connection while traveling, with the add
 
 ## Screenshots 📺
 
-[//]: # (Table with screenshots)
-[//]: # (Table with screenshots)
 | Screenshot                           | Description                            |
 |--------------------------------------|----------------------------------------|
 | ![Mobile Screen 1](doc/mobile_1.png) | Mobile View (Status and Wifi Settings) |
