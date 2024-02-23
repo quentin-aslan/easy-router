@@ -41,3 +41,9 @@ export type AvailableWifi = {
 export type WifiConnect = {
     success: boolean
 };
+
+export type HotspotConnectedDevices = {
+    hostname: string;
+    ip: string;
+    mac: string;
+}
