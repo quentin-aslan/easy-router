@@ -30,7 +30,7 @@ Content-Type: application/json
 ###
 
 # @name wifiDisconnect
-GET {{host}}/api/wifi/disconnect
+GET {{host}}/api/hotspot/connected-devices
 Content-Type: application/json
 
 
