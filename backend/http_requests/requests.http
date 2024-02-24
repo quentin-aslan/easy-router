@@ -23,6 +23,12 @@ Content-Type: application/json
 
 ###
 
+# @name wifiConnectedDevices
+GET {{host}}/api/wifi/
+Content-Type: application/json
+
+###
+
 # @name wifiDisconnect
 GET {{host}}/api/wifi/disconnect
 Content-Type: application/json

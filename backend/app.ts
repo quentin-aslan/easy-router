@@ -139,6 +139,31 @@ app.get('/api/nordvpn/disconnect', (req: Request, res: Response) => {
     }
 });
 
+app.get('/api/hotspot/connected-devices', (req: Request, res: Response) => {
+    try {
+        exec('arp -a', (error: any, stdout: any, stderr: any) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return res.status(500).json({'success': false, 'error': 'Failed to get connected devices'});
+            }
+
+            const devices = stdout.split('\n').map((line: string) => {
+                let [hostname, ip, _, mac] = line.split(' ').filter(Boolean);
+                ip = ip?.replace('(', '').replace(')', '');
+                if(ip || mac || hostname) {
+                    return { ip, mac, hostname };
+                }
+
+                return null
+            }).filter((device: {ip?: string, mac?:string, hostname?:string}) => device !== null);
+            res.json(devices);
+        });
+    } catch (e) {
+        console.error(`exec error: ${e}`);
+        return res.status(500).json({'success': false, 'error': 'Failed to get connected devices'});
+    }
+});
+
 // Redirect all the other routes to Vue app
 app.get('*', (req: Request, res: Response) => {
     res.sendFile(join(__dirname, '../frontend/index.html'));
