@@ -1,5 +1,12 @@
 import {vpnStatusAdapter} from "./adapter";
-import type {AvailableWifi, CurrentWifi, VpnConnect, VpnDisconnect, WifiConnect} from "../types";
+import type {
+    AvailableWifi,
+    CurrentWifi,
+    HotspotConnectedDevices,
+    VpnConnect,
+    VpnDisconnect,
+    WifiConnect
+} from "../types";
 
 export const fetchVpnStatus = async () => {
     const response = await fetch("/api/nordvpn/status");
@@ -36,5 +43,9 @@ export const fetchWifiConnect = async (ssid: string, password: string): Promise<
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ssid, password }),
     });
+    return await response.json();
+}
+export const fetchHotspotConnectedDevices = async (): Promise<HotspotConnectedDevices[]> => {
+    const response = await fetch("/api/hotspot/connected-devices");
     return await response.json();
 }

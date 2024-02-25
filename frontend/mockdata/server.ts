@@ -1,7 +1,7 @@
 import { createServer } from "miragejs"
 import type {FetchedVpnStatus} from "../src/api/type";
 import {type Ref, ref} from "vue";
-import {type AvailableWifi, type CurrentWifi, VpnStatusEnum} from "../src/types";
+import {type AvailableWifi, type CurrentWifi, HotspotConnectedDevices, VpnStatusEnum} from "../src/types";
 
 // MirageJS Server, documentation here : https://miragejs.com/docs/getting-started/overview/
 
@@ -41,6 +41,30 @@ if (process.env.NODE_ENV === 'development') {
                 } else {
                     return { success: false }
                 }
+            })
+
+            // hotspot
+            this.get('/hotspot/connected-devices', () => {
+                const devices: HotspotConnectedDevices[] = [
+                    {
+                        hostname: "Eren Iphone",
+                        ip: "10.42.0.2",
+                        mac: "00:11:22:33:44:55"
+                    },
+                    {
+                        hostname: "Fleur Macbook Air",
+                        ip: "10.42.0.10",
+                        mac: "00:11:22:33:44:55"
+                    },
+                    {
+                        hostname: "Bell",
+                        ip: "10.42.0.89",
+                        mac: "00:11:22:33:44:55"
+                    }
+                ]
+
+
+                return devices
             })
 
             // NORD VPN API
