@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CardTemplate title="WIFI" id="wifi-card">
+    <CardTemplate title="WIFI" class="items-baseline">
     <span v-if="isConnectWifiLoading || isGetCurrentWifiLoading || isGetAvailableWifiLoading">
         <span class="loading loading-spinner loading-md"></span>
       </span>
@@ -68,10 +68,3 @@ const submitForm = async () => {
   (document.getElementById(modalId) as HTMLDialogElement).showModal()
 };
 </script>
-
-<style>
-#wifi-card {
-  min-height: 264px;
-  align-items: baseline;
-}
-</style>

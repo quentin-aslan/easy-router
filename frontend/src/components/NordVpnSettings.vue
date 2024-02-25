@@ -1,6 +1,6 @@
 <template>
   <div >
-    <CardTemplate title="VPN" id="vpn-card">
+    <CardTemplate title="VPN" class="items-baseline">
       <!-- <div class="badge badge-accent badge-outline">{{ vpnStatus?.status ? vpnStatus.status : "Disconnected" }}</div> To do but not here-->
       <span v-if="isConnectVpnLoading || isDisconnectVpnLoading || isGetVpnStatusLoading">
         <span class="loading loading-spinner loading-md"></span>
@@ -24,25 +24,25 @@
             <!-- Virtual location -->
             <div class="stat">
               <div class="stat-title">Virtual location</div>
-              <div class="stat-value">{{ vpnStatus.country }}</div>
+              <div class="stat-value font-normal">{{ vpnStatus.country }}</div>
               <div class="stat-desc">{{ vpnStatus.city }}</div>
             </div>
           
             <!-- IP Address -->
             <div class="stat">
               <div class="stat-title">IP Address</div>
-              <div class="stat-value">{{ vpnStatus.ip }}</div>
+              <div class="stat-value font-normal">{{ vpnStatus.ip }}</div>
               <div class="stat-desc">{{ vpnStatus.hostname }}</div>
             </div>
           
             <!-- UpTime -->
             <div class="stat">
               <div class="stat-title">UpTime</div>
-              <div class="stat-value">{{ vpnStatus?.uptime ? formatUptime(vpnStatus.uptime) : '' }}</div>
+              <div class="stat-value font-normal">{{ vpnStatus?.uptime ? formatUptime(vpnStatus.uptime) : '' }}</div>
               <div class="stat-desc">{{ vpnStatus.transfer }}</div>
             </div>
           </div>
-          <span id="nord">Powered by <a class="link link-info" href="https://nordvpn.com" target="_blank">NordVPN&#169</a></span>
+          <span class="text-end text-sm">Powered by <a class="link link-info" href="https://nordvpn.com" target="_blank">NordVPN&#169</a></span>
 
           <form class="form-control" @submit.prevent="submitDisconnectForm">
             <button type="submit" class="btn btn-outline btn-error" :disabled="isDisconnectVpnLoading" >
@@ -52,7 +52,7 @@
 
         </div>
 
-        <span v-if="isVpnConnected && vpnStatus" class="divider" id="location">🌎 Change location</span>
+        <span v-if="isVpnConnected && vpnStatus" class="divider">🌎 Change location</span>
 
         <select v-model="selectedCity" class="select select-bordered w-full">
           <option v-for="city in citiesAvailable"
@@ -122,19 +122,3 @@ const formatUptime = (uptime: string) => {
   return uptime.replace('minutes', 'min').replace('seconds', 's');
 };
 </script>
-
-<style>
-#vpn-card {
-  min-height: 440px;
-  align-items: baseline;
-}
-
-#nord {
-  text-align: end;
-  font-size: smaller;
-}
-
-#location {
-  text-align: left !important;
-}
-</style>
