@@ -1,11 +1,11 @@
 <template>
   <div class="navbar bg-base-100 flex items-center justify-center">
-    <span class="text-xl" id="logo">🛜 Router Easy</span>
+    <span class="text-xl select-none" >🛜 Router Easy v{{ version }}</span>
   </div>
 </template>
 
-<style>
-#logo {
-  user-select: none; /* Prevent text selection */
-}
-</style>
+<script lang="ts" setup>
+import pkg from '../../package.json';
+
+const version = pkg.version;
+</script>
