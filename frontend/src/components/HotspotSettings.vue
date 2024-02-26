@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import PasswordIcon from "../components/icons/PasswordIcon.vue";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import ModalStatus from "../components/ModalStatus.vue";
 import {BandEnum, EnumModalStatus} from "../types";
 import CardTemplate from "./CardTemplate.vue";
@@ -64,11 +64,17 @@ import ErrorIcon from "./icons/ErrorIcon.vue";
 
 const { hotspotConfig, isGetHotspotConfigLoading, isGetHotspotConfigError } = useManageHotspot()
 
-const ssid = ref(hotspotConfig.value?.ssid || '');
+const ssid = ref('');
 const password = ref(hotspotConfig.value?.password || '');
 const showPassword = ref(false);
 const band = ref(hotspotConfig.value?.band || BandEnum["2.4G"]);
 const bandDisabled = computed(() => true) // Backend not ready yet
+
+watch(hotspotConfig, (newValue) => {
+  ssid.value = newValue.ssid
+  password.value = newValue.password
+  band.value = newValue.band
+}, {immediate: true})
 
 const isSubmitDisabled = computed(() => (
     ssid.value === '' || password.value.length < 3 ||  isGetHotspotConfigLoading.value ||

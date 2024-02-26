@@ -69,13 +69,14 @@ if (process.env.NODE_ENV === 'development') {
             })
 
             this.get('/hotspot/config', () => {
-                if(true) {
+                if(Math.random() >= 0.5) {
                     return new Response(500, { some: 'header' }, { error: "Internal server error" })
                 }
                 return {
                     ssid: "My hotspot",
                     password: "password",
-                    band: "2.4G"
+                    band: "2.4G",
+                    subnet: "10.42.0.1/24"
                 }
             })
 

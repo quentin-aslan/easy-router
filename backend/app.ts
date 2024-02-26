@@ -4,6 +4,8 @@ import express, { Request, Response } from "express";
 import {fileURLToPath} from "url";
 const app = express();
 import { exec } from 'child_process';
+import { promisify } from "node:util";
+const execAsync = promisify(exec);
 const SERVER_PORT = process.env.PORT || 80;
 
 // Body parser
@@ -99,6 +101,34 @@ app.get('/api/wifi/disconnect', (req: Request, res: Response) => {
     } catch (e) {
         console.error(`exec error: ${e}`);
         return res.status(500).json({'success': false, 'error': 'Failed to disconnect from wifi'});
+    }
+});
+
+app.get('/api/hotspot/config', async (req: Request, res: Response) => {
+    try {
+        type Config = {
+            ssid?: string,
+            password?: string,
+            band?: string,
+            subnet?: string
+        }
+
+        const ssid = await execAsync(`nmcli con show Hotspot | grep 802-11-wireless.ssid | awk '{print $2}'`)
+        let password = await execAsync(`nmcli --show-secrets con show Hotspot | grep 802-11-wireless-security.psk | awk '{print $2}'`)
+        const band = await execAsync(`nmcli --show-secrets con show Hotspot | grep 802-11-wireless.band | awk '{print $2}'`)
+        const subnet = await execAsync(`nmcli --show-secrets con show Hotspot | grep IP4.ADDRESS | awk '{print $2}'`)
+
+        const config: Config = {
+            ssid: ssid.stdout.trim(),
+            password: password.stdout.trim().split('\n')[0],
+            band: band.stdout.trim(),
+            subnet: subnet.stdout.trim()
+        }
+
+        res.json(config);
+    } catch (error) {
+        console.error(`exec error: ${error}`);
+        return res.status(500).json({'success': false, error});
     }
 });
 

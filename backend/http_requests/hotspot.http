@@ -1,0 +1,11 @@
+@host = http://10.42.0.1
+
+# @name hotspotConnectedDevices
+GET {{host}}/api/hotspot/connected-devices
+Content-Type: application/json
+
+###
+
+# @name hotspotConfig
+GET {{host}}/api/hotspot/config/
+Content-Type: application/json
