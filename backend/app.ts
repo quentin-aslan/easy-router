@@ -17,6 +17,25 @@ app.use(express.static(join(__dirname, '../frontend')));
 const INTERFACE_NAME_PUBLIC_WIFI = 'wlan0';
 const INTERFACE_NAME_HOTSPOT = 'wlan1';
 
+
+const parseWifiOutput = (output: string) => {
+    const regex = /(.+)\s+([▂▄▆_]+)/g;
+    let matches;
+    const wifiData: {ssid: string, bars: string}[] = [];
+
+    output.split('\n').forEach(function(line) {
+        matches = regex.exec(line);
+        if (matches !== null) {
+            wifiData.push({
+                ssid: matches[1].trim(),
+                bars: matches[2].trim()
+            });
+        }
+    });
+
+    return wifiData;
+}
+
 app.get('/api/wifi/available', (req: Request, res: Response) => {
     try {
         exec(`nmcli --colors no -f SSID,BARS dev wifi list ifname ${INTERFACE_NAME_PUBLIC_WIFI}`, (error: any, stdout: any, stderr: any) => {
@@ -24,10 +43,7 @@ app.get('/api/wifi/available', (req: Request, res: Response) => {
                 console.error(`exec error: ${error}`);
                 return res.status(500).json({'success': false, 'error': 'Failed to get wifi available'});
             }
-            const wifiList = stdout.split('\n').map((line: string) => {
-                const [ssid, bars] = line.split(' ').filter(Boolean);
-                return { ssid, bars };
-            });
+            const wifiList = parseWifiOutput(stdout);
             res.json(wifiList);
         });
     } catch (error) {
