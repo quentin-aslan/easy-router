@@ -1,7 +1,7 @@
 import {vpnStatusAdapter} from "./adapter";
 import type {
     AvailableWifi,
-    CurrentWifi,
+    CurrentWifi, HotspotConfig,
     HotspotConnectedDevices,
     VpnConnect,
     VpnDisconnect,
@@ -50,8 +50,9 @@ export const fetchHotspotConnectedDevices = async (): Promise<HotspotConnectedDe
     return await response.json();
 }
 
-export const fetchHotspotConfig = async () => {
+export const fetchHotspotConfig = async (): Promise<HotspotConfig> => {
     const response = await fetch("/api/hotspot/config");
+    if(!response.ok) throw new Error(response.statusText);
     return await response.json();
 }
 
