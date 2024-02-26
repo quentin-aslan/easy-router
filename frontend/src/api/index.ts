@@ -49,3 +49,17 @@ export const fetchHotspotConnectedDevices = async (): Promise<HotspotConnectedDe
     const response = await fetch("/api/hotspot/connected-devices");
     return await response.json();
 }
+
+export const fetchHotspotConfig = async () => {
+    const response = await fetch("/api/hotspot/config");
+    return await response.json();
+}
+
+export const fetchUpdateHotspotConfig = async (config: any) => {
+    const response = await fetch("/api/hotspot/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config),
+    });
+    return await response.json();
+}

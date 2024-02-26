@@ -67,6 +67,14 @@ if (process.env.NODE_ENV === 'development') {
                 return devices
             })
 
+            this.get('/hotspot/config', () => {
+                return {
+                    ssid: "My hotspot",
+                    password: "password",
+                    band: "2.4G"
+                }
+            }, {timing: 2000})
+
             // NORD VPN API
 
             const vpnStatusMock = {
