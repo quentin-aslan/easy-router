@@ -25,7 +25,9 @@ app.get('/api/wifi/available', (req: Request, res: Response) => {
                 return res.status(500).json({'success': false, 'error': 'Failed to get wifi available'});
             }
             const wifiList = stdout.split('\n').map((line: string) => {
-                const [ssid, bars] = line.split(' ').filter(Boolean);
+                let parts = line.split(' ');
+                let ssid = parts.filter(word => !word.startsWith('*')).join(' ');
+                let bars = parts.filter(word => word.startsWith('*')).join('');
                 return { ssid, bars };
             });
             res.json(wifiList);
