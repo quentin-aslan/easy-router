@@ -10,5 +10,8 @@ export default defineConfig({
 	},
 	build: {
 		outDir: '../dist/frontend/',
-	}
+	},
+	server: {
+		port: 8080,
+	},
 });

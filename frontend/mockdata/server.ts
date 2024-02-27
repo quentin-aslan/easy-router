@@ -2,6 +2,7 @@ import { createServer } from "miragejs"
 import type {FetchedVpnStatus} from "../src/api/type";
 import {type Ref, ref} from "vue";
 import {type AvailableWifi, type CurrentWifi, HotspotConnectedDevices, VpnStatusEnum} from "../src/types";
+import { Response } from 'miragejs';
 
 // MirageJS Server, documentation here : https://miragejs.com/docs/getting-started/overview/
 
@@ -65,6 +66,18 @@ if (process.env.NODE_ENV === 'development') {
 
 
                 return devices
+            })
+
+            this.get('/hotspot/config', () => {
+                if(Math.random() >= 0.5) {
+                    return new Response(500, { some: 'header' }, { error: "Internal server error" })
+                }
+                return {
+                    ssid: "My hotspot",
+                    password: "password",
+                    band: "2.4G",
+                    subnet: "10.42.0.1/24"
+                }
             })
 
             // NORD VPN API
