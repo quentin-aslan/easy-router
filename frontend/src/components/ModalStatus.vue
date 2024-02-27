@@ -19,6 +19,10 @@
         </form>
       </div>
     </div>
+    <!-- it will close the modal when user click outside the modal -->
+    <form method="dialog" class="modal-backdrop">
+      <button>invisible button</button>
+    </form>
   </dialog>
 </template>
 

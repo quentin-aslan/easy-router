@@ -1,32 +1,58 @@
 <template>
-  <div>
-    <CardTemplate title="NordVPN Settings">
-    <span v-if="isConnectVpnLoading || isDisconnectVpnLoading || isGetVpnStatusLoading">
-        <span class="loading loading-bars loading-lg"></span>
+  <div >
+    <CardTemplate title="VPN" class="items-baseline">
+      <!-- <div class="badge badge-accent badge-outline">{{ vpnStatus?.status ? vpnStatus.status : "Disconnected" }}</div> To do but not here-->
+      <span v-if="isConnectVpnLoading || isDisconnectVpnLoading || isGetVpnStatusLoading">
+        <span class="loading loading-spinner loading-md"></span>
       </span>
-      <div v-else class="w-full flex flex-col gap-3">
+      <div v-else class="flex flex-col gap-3 w-full sm:w-auto">
 
         <div v-if="isVpnConnected && vpnStatus" class="flex flex-col gap-3">
+          <div class="lg:hidden">
+            <ul class="text-left flex flex-col gap-1 p-1">
+              <li>Status: <span class="underline">{{ vpnStatus.status }}</span></li>
+              <li>City: <span class="underline">{{ vpnStatus.city }}</span></li>
+              <li>Country: <span class="underline">{{ vpnStatus.country }}</span></li>
+              <li>IP: <span class="underline">{{ vpnStatus.ip }}</span></li>
+              <li>Hostname: <span class="underline">{{ vpnStatus.hostname }}</span></li>
+              <li>UpTime: <span class="underline">{{ vpnStatus.uptime }}</span></li>
+              <li>Transfer: <span class="underline">{{ vpnStatus.transfer }}</span></li>
+            </ul>
+          </div>
 
-          <ul class="text-left flex flex-col gap-1 p-1">
-            <li>Status: <span class="underline">{{ vpnStatus.status }}</span></li>
-            <li>City: <span class="underline">{{ vpnStatus.city }}</span></li>
-            <li>Country: <span class="underline">{{ vpnStatus.country }}</span></li>
-            <li>IP: <span class="underline">{{ vpnStatus.ip }}</span></li>
-            <li>Hostname: <span class="underline">{{ vpnStatus.hostname }}</span></li>
-            <li>UpTime: <span class="underline">{{ vpnStatus.uptime }}</span></li>
-            <li>Transfer: <span class="underline">{{ vpnStatus.transfer }}</span></li>
-          </ul>
+          <div class="hidden lg:flex stats shadow">
+            <!-- Virtual location -->
+            <div class="stat">
+              <div class="stat-title">Virtual location</div>
+              <div class="stat-value font-normal">{{ vpnStatus.country }}</div>
+              <div class="stat-desc">{{ vpnStatus.city }}</div>
+            </div>
+          
+            <!-- IP Address -->
+            <div class="stat">
+              <div class="stat-title">IP Address</div>
+              <div class="stat-value font-normal">{{ vpnStatus.ip }}</div>
+              <div class="stat-desc">{{ vpnStatus.hostname }}</div>
+            </div>
+          
+            <!-- UpTime -->
+            <div class="stat">
+              <div class="stat-title">UpTime</div>
+              <div class="stat-value font-normal">{{ vpnStatus?.uptime ? formatUptime(vpnStatus.uptime) : '' }}</div>
+              <div class="stat-desc">{{ vpnStatus.transfer }}</div>
+            </div>
+          </div>
+          <span class="text-end text-sm">Powered by <a class="link link-info" href="https://nordvpn.com" target="_blank">NordVPN&#169</a></span>
 
-          <form class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitDisconnectForm">
+          <form class="form-control" @submit.prevent="submitDisconnectForm">
             <button type="submit" class="btn btn-outline btn-error" :disabled="isDisconnectVpnLoading" >
-              ⚠️ Disconnect ⚠️
+              ⚠️ Disconnect
             </button>
           </form>
 
         </div>
 
-        <span v-if="isVpnConnected && vpnStatus" class="divider">⬇️ Connect to a city ⬇️</span>
+        <span v-if="isVpnConnected && vpnStatus" class="divider">🌎 Change location</span>
 
         <select v-model="selectedCity" class="select select-bordered w-full">
           <option v-for="city in citiesAvailable"
@@ -36,7 +62,7 @@
             {{ city.label }}
           </option>
         </select>
-        <form class="form-control flex flex-col gap-5 w-full" @submit.prevent="submitForm">
+        <form class="form-control flex" @submit.prevent="submitForm">
           <button type="submit" class="btn btn-neutral" :disabled="isConnectButtonDisabled" >
             Connect
           </button>
@@ -89,5 +115,10 @@ const submitForm = async () => {
 const submitDisconnectForm = async () => {
   await disconnectVpn();
   (document.getElementById(modalIdDisconnect) as HTMLDialogElement).showModal()
+};
+
+const formatUptime = (uptime: string) => {
+  // Replace "minutes" with "min" and "seconds" with "s"
+  return uptime.replace('minutes', 'min').replace('seconds', 's');
 };
 </script>
