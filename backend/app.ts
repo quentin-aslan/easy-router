@@ -58,8 +58,8 @@ app.get('/api/wifi/current', (req: Request, res: Response) => {
 app.post('/api/wifi/connect', (req: Request, res: Response) => {
     try {
         const { ssid, password } = req.body;
-        let cmd = `nmcli dev wifi connect ${ssid} password ${password} ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
-        if (!password || password == '') cmd = `nmcli dev wifi connect ${ssid} ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
+        let cmd = `nmcli dev wifi connect "${ssid}" password "${password}" ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
+        if (!password || password == '') cmd = `nmcli dev wifi connect "${ssid}" ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
         exec(cmd, (error: any, stdout: any, stderr: any) => {
             if (error) {
                 console.error(`exec error: ${error}`);
