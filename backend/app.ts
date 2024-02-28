@@ -4,6 +4,8 @@ import express, { Request, Response } from "express";
 import {fileURLToPath} from "url";
 const app = express();
 import { exec } from 'child_process';
+import { promisify } from "node:util";
+const execAsync = promisify(exec);
 const SERVER_PORT = process.env.PORT || 80;
 
 // Body parser
@@ -17,6 +19,25 @@ app.use(express.static(join(__dirname, '../frontend')));
 const INTERFACE_NAME_PUBLIC_WIFI = 'wlan0';
 const INTERFACE_NAME_HOTSPOT = 'wlan1';
 
+
+const parseWifiOutput = (output: string) => {
+    const regex = /(.+)\s+([▂▄▆_]+)/g;
+    let matches;
+    const wifiData: {ssid: string, bars: string}[] = [];
+
+    output.split('\n').forEach(function(line) {
+        matches = regex.exec(line);
+        if (matches !== null) {
+            wifiData.push({
+                ssid: matches[1].trim(),
+                bars: matches[2].trim()
+            });
+        }
+    });
+
+    return wifiData;
+}
+
 app.get('/api/wifi/available', (req: Request, res: Response) => {
     try {
         exec(`nmcli --colors no -f SSID,BARS dev wifi list ifname ${INTERFACE_NAME_PUBLIC_WIFI}`, (error: any, stdout: any, stderr: any) => {
@@ -24,10 +45,7 @@ app.get('/api/wifi/available', (req: Request, res: Response) => {
                 console.error(`exec error: ${error}`);
                 return res.status(500).json({'success': false, 'error': 'Failed to get wifi available'});
             }
-            const wifiList = stdout.split('\n').map((line: string) => {
-                const [ssid, bars] = line.split(' ').filter(Boolean);
-                return { ssid, bars };
-            });
+            const wifiList = parseWifiOutput(stdout);
             res.json(wifiList);
         });
     } catch (error) {
@@ -56,8 +74,8 @@ app.get('/api/wifi/current', (req: Request, res: Response) => {
 app.post('/api/wifi/connect', (req: Request, res: Response) => {
     try {
         const { ssid, password } = req.body;
-        let cmd = `nmcli dev wifi connect ${ssid} password ${password} ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
-        if (!password || password == '') cmd = `nmcli dev wifi connect ${ssid} ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
+        let cmd = `nmcli dev wifi connect "${ssid}" password "${password}" ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
+        if (!password || password == '') cmd = `nmcli dev wifi connect "${ssid}" ifname ${INTERFACE_NAME_PUBLIC_WIFI}`;
         exec(cmd, (error: any, stdout: any, stderr: any) => {
             if (error) {
                 console.error(`exec error: ${error}`);
@@ -83,6 +101,34 @@ app.get('/api/wifi/disconnect', (req: Request, res: Response) => {
     } catch (e) {
         console.error(`exec error: ${e}`);
         return res.status(500).json({'success': false, 'error': 'Failed to disconnect from wifi'});
+    }
+});
+
+app.get('/api/hotspot/config', async (req: Request, res: Response) => {
+    try {
+        type Config = {
+            ssid?: string,
+            password?: string,
+            band?: string,
+            subnet?: string
+        }
+
+        const ssid = await execAsync(`nmcli con show Hotspot | grep 802-11-wireless.ssid | awk '{print $2}'`)
+        let password = await execAsync(`nmcli --show-secrets con show Hotspot | grep 802-11-wireless-security.psk | awk '{print $2}'`)
+        const band = await execAsync(`nmcli --show-secrets con show Hotspot | grep 802-11-wireless.band | awk '{print $2}'`)
+        const subnet = await execAsync(`nmcli --show-secrets con show Hotspot | grep IP4.ADDRESS | awk '{print $2}'`)
+
+        const config: Config = {
+            ssid: ssid.stdout.trim(),
+            password: password.stdout.trim().split('\n')[0],
+            band: band.stdout.trim(),
+            subnet: subnet.stdout.trim()
+        }
+
+        res.json(config);
+    } catch (error) {
+        console.error(`exec error: ${error}`);
+        return res.status(500).json({'success': false, error});
     }
 });
 

@@ -13,10 +13,11 @@ import {useManageHotspot} from "./composable/use-manage-hotspot";
 // Get data from the backend when the app starts
 const { getAvailableWifi, getCurrentWifi } = useManageWifi()
 const { getVpnStatus } = useManageNordVpn()
-const { getConnectedDevices } = useManageHotspot()
+const { getConnectedDevices, getHotspotConfig } = useManageHotspot()
 
 getCurrentWifi()
 getAvailableWifi()
 getVpnStatus()
 getConnectedDevices()
+getHotspotConfig()
 </script>
