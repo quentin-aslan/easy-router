@@ -47,3 +47,14 @@ export type HotspotConnectedDevices = {
     ip: string;
     mac: string;
 }
+
+export enum BandEnum {
+    "2.4G" = "2.4G",
+    "5G" = "5G"
+}
+
+export type HotspotConfig = {
+    ssid: string;
+    password: string;
+    band: BandEnum;
+}

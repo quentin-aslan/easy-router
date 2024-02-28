@@ -24,7 +24,9 @@
           <div class="w-full">
             <label class="input input-bordered flex items-center gap-2">
               <PasswordIcon />
-              <input :disabled="selectedWifi === ''" v-model="password" type="text" class="grow" placeholder="Wifi Password" />
+              <input :disabled="selectedWifi === ''" v-model="password" :type="(showPassword) ? 'text' : 'password'" class="grow" placeholder="Wifi Password" />
+              <SwapCheckbox v-model="showPassword" />
+              <span class="badge badge-ghost">Optional</span>
             </label>
           </div>
 
@@ -45,12 +47,14 @@ import {computed, ref, watch} from "vue";
 import ModalStatus from "../components/ModalStatus.vue";
 import {EnumModalStatus} from "../types";
 import CardTemplate from "./CardTemplate.vue";
+import SwapCheckbox from "./SwapCheckbox.vue";
 
 const { currentWifi, isGetCurrentWifiLoading, availableWifi, isGetAvailableWifiLoading, connectWifi, isConnectWifiLoading, isConnectWifiError } = useManageWifi();
 const selectedWifi = ref('')
 watch(() => currentWifi.value, (newValue) => selectedWifi.value = newValue?.ssid || '')
 
 const password = ref('');
+const showPassword = ref(false);
 
 const isSubmitDisabled = computed(() => (selectedWifi.value === '' ||  isConnectWifiLoading.value))
 
